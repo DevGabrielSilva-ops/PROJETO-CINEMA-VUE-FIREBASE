@@ -67,13 +67,16 @@ const cadastrarFilme = async () => {
 </template>
 
 <style scoped>
-
+   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+ 
     .form-container{
   background-color: #0a0f1a;
   padding: 30px;
   border-radius: 15px;
   width: 400px;
   margin: 100px auto;
+  font-family: "Jost", sans-serif;
+
 }
 
 .form-container h2{

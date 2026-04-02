@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import GraficoVendas from "@/components/GraficoVenda.vue"
 import GraficoSessao from '@/components/GraficoSessao.vue';
 import GraficoFilmes from '@/components/GraficoFilmes.vue';
-import Header from '@/components/header.vue'
+import Header from '@/components/headerAdmin.vue'
 
 
 

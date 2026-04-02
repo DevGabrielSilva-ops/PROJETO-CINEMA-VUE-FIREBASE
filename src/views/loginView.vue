@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from 'firebase/auth'
-import Logo from '../assets/logo.png'
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import { db } from '../firebase/config'
+import {  doc, getDoc } from "firebase/firestore"
+
+
 
 
 import { auth } from '../firebase/config' 
@@ -17,32 +17,50 @@ const router = useRouter()
 
 const email = ref('')
 const senha = ref('')
-const erro = ref('')
+const erro = ref("")
 
-
-const fazerlogin = async () => {
+const fazerLogin = async () => {
   erro.value = ''
+
   try {
-    await signInWithEmailAndPassword(auth, email.value, senha.value)
-    router.push('/dashboard')
-  } catch (e) {
-    erro.value = 'Nao foi possivel entrar. Verifique email e senha.'
+
+    // faz o login no FirebaseAuth
+    const credencialUsuario = await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      senha.value
+    )
+
+    // pega o identificador único do usuário
+    const idUsuario = credencialUsuario.user.uid
+
+    // busca os dados do usuário no banco firestore
+    const referenciaDocumento = doc(db, "usuarios", idUsuario)
+    const documentoUsuario = await getDoc(referenciaDocumento)
+
+    // verifica se o documento existe
+    if (documentoUsuario.exists()) {
+
+      // pega o tipo do usuário
+      const tipoUsuario = documentoUsuario.data().tipo
+
+      // redireciona dependendo do tipo
+      if (tipoUsuario === "Administrador") {
+        router.push('/dashboard')
+      } else {
+        router.push('/vendas')
+      }
+
+    }
+
+  } catch (erroLogin) {
+
+    erro.value = 'Não foi possível entrar. Verifique email e senha.'
+    alert(erro.value)
+
   }
 }
 
-const registrar = async () => {
-  erro.value = ''
-  try {
-    // Cria o usuário no Firebase Authentication.
-    // Se o e-mail já existir ou a senha for fraca, o Firebase lança erro.
-    await createUserWithEmailAndPassword(auth, email.value, senha.value)
-
-    // Conta criada e usuário já autenticado — redireciona direto.
-    router.push('/dashboard')
-  } catch (e) {
-    erro.value = 'Nao foi possivel cadastrar. Verifique os dados.'
-  }
-}
 </script>
 
 <template>
@@ -72,13 +90,10 @@ const registrar = async () => {
         class="input"
       />
 
-      <button class="login-btn" @click="fazerlogin">
+      <button class="login-btn" @click="fazerLogin">
         Entrar
       </button>
 
-      <button class="registrar-btn" @click="registrar">
-        Registrar
-      </button>
 
     </div>
 
@@ -158,22 +173,6 @@ const registrar = async () => {
   background:#ff1e28;
 }
 
-.registrar-btn{
-  display: flex;
-  justify-content: flex-end;
-  margin-top:5px;
-
-  background: none;
-  border:none;
-
-  color:white;
-  font-weight:bold;
-
-  border-radius:6px;
-  cursor:pointer;
-
-  transition:0.3s;
-}
 
 #logoCine{
   width: 300px;

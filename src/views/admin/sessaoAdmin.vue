@@ -1,10 +1,11 @@
 <script setup>
-import FormFilme from "@/components/formFilme.vue";
+import FormSessao from "@/components/formSessao.vue";
 import Header from "@/components/headerAdmin.vue"
 
 </script>
 
 <template>
     <Header></Header>
-    <FormFilme></FormFilme>
+    <FormSessao></FormSessao>
+    
 </template>
