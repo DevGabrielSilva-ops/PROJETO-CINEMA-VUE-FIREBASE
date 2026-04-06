@@ -40,14 +40,14 @@ const RetornaLogin = () => {
 
       <div class="menu">
         <img class="top-img" src="../assets/sessões.svg" alt="error"> 
-        <router-link to="/vendas" class="meu-botao">
+        <router-link to="/sessaoVend" class="meu-botao">
          <p>SESSÕES</p>
          </router-link>
       </div>
 
       <div class="menu">
         <img class="top-img" src="../assets/sessões.svg" alt="error"> 
-        <router-link to="/vendas" class="meu-botao">
+        <router-link to="/histVendas" class="meu-botao">
          <p>HISTÓRICO</p>
          </router-link>
       </div>

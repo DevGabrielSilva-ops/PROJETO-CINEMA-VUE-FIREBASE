@@ -1,13 +1,32 @@
 <script setup>
-import { ref } from 'vue' 
+import { ref,onMounted } from 'vue' 
+import { db } from '@/firebase/config';
+import { getDocs,collection} from 'firebase/firestore';
 import GraficoVendas from "@/components/GraficoVenda.vue"
 import GraficoSessao from '@/components/GraficoSessao.vue';
 import GraficoFilmes from '@/components/GraficoFilmes.vue';
 import Header from '@/components/headerAdmin.vue'
 
+const valorTotal = ref(0)
 
+const FaturamentoTotal = async () => {
 
-const FaturamnetoTotal = ref(3450.50)
+  const resposta = await getDocs(collection(db,"vendas"))
+
+  let soma = 0
+
+  resposta.docs.forEach(doc => {
+    const venda = doc.data()
+    soma += venda.total
+  })
+
+  valorTotal.value = soma
+}
+
+onMounted(() => {
+  FaturamentoTotal()
+})
+
 </script>
 
 
@@ -39,7 +58,7 @@ const FaturamnetoTotal = ref(3450.50)
     <div class="Card-itens-f">
       <div class="Faturamento-Card">
        <h2>Faturamento Total</h2>
-        <p>R$: {{ FaturamnetoTotal }}</p>
+        <p>R$: {{ valorTotal }}</p>
       </div>
     </div>
 

@@ -9,9 +9,9 @@ const filmes = ref([])
 
 const carregarFilmes = async () => {
 
-    const querySnapshot = await getDocs(collection(db, "filmes"))
+    const resposta = await getDocs(collection(db, "filmes"))
 
-    filmes.value = querySnapshot.docs.map(doc => ({
+    filmes.value = resposta.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
     }))
@@ -180,6 +180,10 @@ function abrirModal(filme) {
     transition: transform 0.4s ease;
 }
 
+.carrosel-elementos button{
+    cursor: pointer;
+}
+
 .filme:hover {
     transform: scale(1.05);
     transition: 0.3s;
@@ -241,6 +245,7 @@ function abrirModal(filme) {
     cursor: pointer;
     margin-left: 350px;
     padding: 8px;
+    
 
 }
 

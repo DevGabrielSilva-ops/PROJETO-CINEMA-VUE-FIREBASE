@@ -5,6 +5,9 @@ import VendaViewVendedor from '../views/vendedor/vendaView.vue'
 import CadastroFilmesView from '../views/admin/filmesAdmin.vue'
 import SessaoViewAdmin from '../views/admin/sessaoAdmin.vue'
 import FuncionarioViewAdmin from '../views/admin/funcionarioAdmin.vue'
+import sessaoVendView from '@/views/vendedor/sessaoVendView.vue'
+import historicoVendView from '@/views/vendedor/historicoVendView.vue'
+
 
 const routes = [
   {
@@ -38,6 +41,19 @@ const routes = [
     path: '/cadFuncionario',
     component: FuncionarioViewAdmin
   },
+
+   {
+    path: '/sessaoVend',
+    component: sessaoVendView
+  },
+
+   {
+    path: '/histVendas',
+    component: historicoVendView
+  },
+
+
+ 
 ]
 
 const router = createRouter({

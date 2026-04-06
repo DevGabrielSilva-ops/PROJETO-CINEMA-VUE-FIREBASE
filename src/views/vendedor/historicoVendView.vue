@@ -1,15 +1,15 @@
 <script setup>
 import Header from '@/components/headerVendedor.vue';
-import Vendas from '@/components/vendas.vue'
-
+import Historico from '@/components/histVendas.vue'
 </script>
 
 
 <template>
   <section id="container">
-      <Header></Header>
-      <Vendas></Vendas>
-
+    
+    <Header></Header>
+    <Historico></Historico>
+    
   </section>
 </template>
 

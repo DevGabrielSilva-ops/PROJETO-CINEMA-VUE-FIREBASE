@@ -4,6 +4,7 @@ import { db } from "../firebase/config"
 import { collection, addDoc, getDocs} from "firebase/firestore"
 const sala = ref("")
 const assentos = ref("")
+const horario = ref("")
 
 
 //armaazena os dados do fireBase
@@ -18,7 +19,7 @@ const buscarFilmes = async () => {
   
   // percorre os documentos e transforma em array
   listaFilmes.value = resposta.docs.map(filmes => ({
-      id: filmes.id,
+      titulo: filmes.titulo,
       ...filmes.data()
   }))
 }
@@ -33,10 +34,11 @@ const cadastrarSessao = async () => {
 
   try {
 
-    await addDoc(collection(db, "Sessão"), {
+    await addDoc(collection(db, "sessao"), {
         sala:  sala.value,
         assentos: assentos.value,
-        filmeId: filmeSelecionado.value
+        horario: horario.value,
+        filmeTitulo: filmeSelecionado.value,
     })
 
     
@@ -45,6 +47,7 @@ const cadastrarSessao = async () => {
 
     sala.value = ""
     assentos.value = ""
+    horario.value = ""
     filmeSelecionado.value = ""
 
 
@@ -71,9 +74,12 @@ const cadastrarSessao = async () => {
       <label>Assentos</label>
       <input type="number" v-model="assentos" placeholder="Número de assentos disponíveis...">
 
+      <label>Horário</label>
+      <input type="text" v-model="horario" placeholder="Digite a Hora da sessão 00:00...">
+
       <label>Selecione o filme</label>
       <select v-model="filmeSelecionado" >
-        <option v-for="filmes in listaFilmes" :key="filmes.id" :value="filmes.id">
+        <option v-for="filmes in listaFilmes" :key="filmes.id" :value="filmes.titulo">
         {{ filmes.titulo }}
       </option>
       </select>
